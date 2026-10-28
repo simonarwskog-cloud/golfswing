@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="sv">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>GolfSwing</title>
+  <meta name="description" content="Filma din golfsving och få tips direkt.">
+  <meta name="theme-color" content="#0A100E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="GolfSwing">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <img src="icons/icon.svg" alt="" class="logo">
+    <h1>GolfSwing</h1>
+    <button id="btn-settings" class="icon-btn" aria-label="Inställningar">
+      <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+    </button>
+  </header>
+
+  <main>
+    <!-- Välkomst: välj nivå -->
+    <section id="screen-welcome" class="screen" hidden>
+      <div class="hero">
+        <img src="icons/icon.svg" alt="" class="hero-logo">
+        <h2>Välkommen till GolfSwing!</h2>
+        <p>Filma din sving – så säger din AI-tränare vad du ska träna på.</p>
+      </div>
+      <div class="card">
+        <h3>Hur länge har du spelat golf?</h3>
+        <div class="stack" id="level-buttons">
+          <button class="btn btn-secondary" data-level="ny">Jag är ny på golf</button>
+          <button class="btn btn-secondary" data-level="medel">Jag spelar ibland</button>
+          <button class="btn btn-secondary" data-level="erfaren">Jag har spelat länge</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Hem: filma eller välj video -->
+    <section id="screen-home" class="screen" hidden>
+      <h2>Dags att kolla din sving?</h2>
+      <div id="home-error" class="card card-error" role="alert" hidden></div>
+      <div class="stack">
+        <button class="btn btn-primary btn-big" id="btn-film">
+          <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="M16 10l6-3v10l-6-3z"/></svg>
+          Filma min sving
+        </button>
+        <button class="btn btn-secondary" id="btn-pick">
+          <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 6h7l2 2h9v11H3z"/></svg>
+          Välj en video jag redan har
+        </button>
+      </div>
+
+      <button class="list-item home-last" id="home-last" hidden></button>
+
+      <div class="card install" id="install-card" hidden>
+        <h3>Lägg GolfSwing på hemskärmen</h3>
+        <p id="install-text"></p>
+        <button class="btn btn-primary" id="btn-install" hidden>Installera appen</button>
+      </div>
+
+      <div class="card coach" id="home-coach">
+        <div class="coach-head">Din tränare säger</div>
+        <p id="home-coach-text"></p>
+      </div>
+
+      <div class="card">
+        <h3>Så filmar du rätt</h3>
+        <svg class="guide-pic" viewBox="0 0 320 150" role="img" aria-label="Ställ kameran framför dig eller bakom dig i bollens riktning">
+          <line x1="20" y1="75" x2="300" y2="75" stroke="currentColor" stroke-dasharray="6 6" opacity=".4"/>
+          <path d="M290 67l12 8-12 8" fill="none" stroke="currentColor" stroke-width="2"/>
+          <text x="262" y="100" font-size="13" fill="currentColor">Mål</text>
+          <circle cx="160" cy="75" r="6" fill="#2FA35A"/>
+          <circle cx="160" cy="40" r="14" fill="none" stroke="currentColor" stroke-width="2"/>
+          <text x="128" y="20" font-size="13" fill="currentColor">Du</text>
+          <rect x="150" y="122" width="20" height="14" rx="3" fill="#145A32"/>
+          <text x="180" y="134" font-size="13" fill="currentColor">Framifrån</text>
+          <rect x="26" y="68" width="20" height="14" rx="3" fill="#145A32"/>
+          <text x="18" y="108" font-size="13" fill="currentColor">Bakifrån</text>
+        </svg>
+        <ol class="steps">
+          <li>Ställ mobilen <b>stadigt</b> i midjehöjd, 3–4 meter bort.</li>
+          <li>Filma <b>framifrån</b> eller <b>bakifrån</b> i bollens riktning. Bakifrån visar din svingbana.</li>
+          <li>Hela kroppen och klubban ska synas. <b>En sving</b> per video, i vanlig hastighet.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Analyserar -->
+    <section id="screen-analyzing" class="screen" hidden>
+      <h2 id="an-title">Analyserar din sving…</h2>
+      <div id="player-slot-an"></div>
+      <div class="progress" aria-hidden="true"><div id="an-bar"></div></div>
+      <p class="center muted" id="an-text" aria-live="polite">Laddar videon…</p>
+      <button class="btn btn-secondary" id="btn-cancel">Avbryt</button>
+    </section>
+
+    <!-- Resultat -->
+    <section id="screen-result" class="screen" hidden>
+      <h2 class="compare-title">Din sving bredvid en perfekt sving</h2>
+      <div class="compare" id="compare">
+        <div class="panel">
+          <div class="panel-label">Du</div>
+          <div id="player-slot-res"></div>
+          <img id="res-thumb" class="thumb" alt="Din sving i toppen av baksvingen" hidden>
+        </div>
+        <div class="panel">
+          <div class="panel-label ideal">Perfekt sving</div>
+          <div class="model-box" id="model-box"><canvas id="model" aria-label="Figur som visar en perfekt sving"></canvas></div>
+        </div>
+      </div>
+      <div id="player-controls" class="controls">
+        <div class="control-row">
+          <button class="play-btn" id="btn-play" aria-label="Spela">
+            <svg id="icon-play" viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            <svg id="icon-pause" viewBox="0 0 24 24" width="30" height="30" fill="currentColor" hidden><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>
+          </button>
+          <label class="slider">
+            <span class="slider-head"><span>Hastighet</span><b id="speed-label">25 %</b></span>
+            <input type="range" id="speed" min="5" max="100" step="5" value="25" aria-label="Hastighet">
+            <span class="slider-ends"><span>Långsamt</span><span>Normal fart</span></span>
+          </label>
+        </div>
+        <label class="slider">
+          <span class="slider-head"><span>Spola i svingen</span></span>
+          <input type="range" id="scrub" min="0" max="1000" value="0" aria-label="Spola i svingen">
+        </label>
+        <div class="chips" id="phase-chips">
+          <button class="chip" data-phase="address">Start</button>
+          <button class="chip" data-phase="top">Toppen</button>
+          <button class="chip" data-phase="down">Nedsving</button>
+          <button class="chip" data-phase="impact">Träff</button>
+          <button class="chip" data-phase="finish">Avslut</button>
+        </div>
+        <button class="toggle" id="btn-ghost" aria-pressed="false">
+          <span>Lägg gubben ovanpå min video</span><span class="switch"></span>
+        </button>
+      </div>
+      <div class="compare-text" id="compare-text" aria-live="polite"></div>
+      <p class="legend"><span class="dot dot-up"></span> På väg upp <span class="dot dot-down"></span> På väg ner<br><span id="legend-text"></span></p>
+
+      <div class="card score-card">
+        <div class="score-ring" id="res-ring"><span id="res-score">0</span></div>
+        <div>
+          <div class="score-label" id="res-label"></div>
+          <div class="muted" id="res-view"></div>
+        </div>
+      </div>
+
+      <div class="card card-focus" id="res-changes"></div>
+      <div class="card" id="res-main"></div>
+      <div class="card card-good" id="res-good" hidden></div>
+
+      <details class="card" id="res-pro-card">
+        <summary>Dina siffror jämfört med proffs</summary>
+        <div class="pro-table" id="res-pro"></div>
+        <p class="muted small">Värdena är uppskattade från videon.</p>
+      </details>
+
+      <div class="stack">
+        <button class="btn btn-primary" data-go="training">Till min träning</button>
+        <button class="btn btn-secondary" data-go="home">Analysera en ny sving</button>
+      </div>
+    </section>
+
+    <!-- Utveckling -->
+    <section id="screen-progress" class="screen" hidden>
+      <h2>Min utveckling</h2>
+      <div class="card coach">
+        <div class="coach-head">Din tränare säger</div>
+        <p id="prog-coach"></p>
+      </div>
+      <div class="card" id="prog-chart-card">
+        <h3>Svingpoäng</h3>
+        <div id="prog-chart"></div>
+      </div>
+      <div id="prog-list" class="list"></div>
+      <button class="btn btn-ghost" id="btn-clear" hidden>Rensa historiken</button>
+    </section>
+
+    <!-- Träning -->
+    <section id="screen-training" class="screen" hidden>
+      <h2>Min träning</h2>
+      <p class="muted" id="train-intro"></p>
+      <div class="card streak" id="train-streak"></div>
+      <div id="train-list"></div>
+    </section>
+  </main>
+
+  <!-- Videospelaren flyttas mellan analys- och resultatsidan -->
+  <div id="player" class="player" hidden>
+    <div id="zoom" class="zoom">
+      <video id="video" playsinline muted preload="auto"></video>
+      <canvas id="overlay"></canvas>
+      <canvas id="ghost" hidden></canvas>
+    </div>
+  </div>
+
+  <nav class="tabbar" id="tabbar">
+    <button data-go="home">
+      <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="M16 10l6-3v10l-6-3z"/></svg>
+      Analysera
+    </button>
+    <button data-go="progress">
+      <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18M5 16l5-5 4 3 6-7"/></svg>
+      Utveckling
+    </button>
+    <button data-go="training">
+      <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg>
+      Träning
+    </button>
+  </nav>
+
+  <input type="file" id="file-camera" accept="video/*" capture="environment" hidden>
+  <input type="file" id="file-library" accept="video/*" hidden>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
